@@ -8,10 +8,12 @@ run: build
 
 test-auth-local: TOKEN=`curl -d '{"email":"tyler@gmail.com","password":"123supercoolpassword"}' -H "Content-Type: application/json" -X POST localhost:80/auth  | jq -r '.token'`
 test-auth-local:
+	echo "TOKEN: ${TOKEN}"
 	curl --request GET 'http://127.0.0.1:80/contents' -H "Authorization: Bearer ${TOKEN}" | jq .
 
 
 test-eks: TOKEN =`curl -d '{"email":"tylerlanigan@gmail.com","password":"password123"}' -H "Content-Type: application/json" -X POST $(EXTERNAL_IP)/auth  | jq -r '.token'`
 test-eks:
+	echo "TOKEN: ${TOKEN}"
 	curl --request GET '$(EXTERNAL_IP)/contents' -H "Authorization: Bearer ${TOKEN}" | jq
 	
